@@ -1,0 +1,29 @@
+api:
+  dashboard: true
+  debug: true
+
+entryPoints:
+  http:
+    address: :80
+  https:
+    address: :443
+
+providers:
+  file:
+    filename: /etc/traefik/config.yml
+  docker:
+    watch: true
+    endpoint: unix:///var/run/docker.sock
+    exposedByDefault: false
+    network: traefik
+
+#certificatesResolvers:
+#  http:
+#    acme:
+#      email: some-email@gmail.com
+#      storage: acme.json
+#      httpChallenge:
+#        entryPoint: http
+
+log:
+  level: DEBUG

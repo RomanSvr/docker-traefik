@@ -1,0 +1,35 @@
+http:
+  middlewares:
+    https-redirect:
+      redirectScheme:
+        scheme: https
+
+    default-headers:
+      headers:
+        frameDeny: true
+        sslRedirect: true
+        browserXssFilter: true
+        contentTypeNosniff: true
+        forceSTSHeader: true
+        stsIncludeSubdomains: true
+        stsPreload: true
+
+    default-whitelist:
+      ipWhiteList:
+        sourceRange:
+        - "10.0.0.0/24"
+        - "192.168.0.0/16"
+        - "172.0.0.0/8"
+
+    secured:
+      chain:
+        middlewares:
+        - default-whitelist
+        - default-headers
+
+tls:
+  certificates:
+    - certFile: /etc/traefik/rootCA.pem
+      keyFile: /etc/traefik/rootCA-key.pem
+    - certFile: /etc/traefik/traefik.local.pem
+      keyFile: /etc/traefik/traefik.local-key.pem

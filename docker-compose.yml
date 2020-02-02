@@ -1,0 +1,36 @@
+version: '3.7'
+
+networks:
+  traefik:
+    name: traefik
+
+services:
+
+  traefik:
+    container_name: traefik
+    restart: unless-stopped
+#    isolation: process
+    build:
+      context: ./
+    networks:
+      - traefik
+    ports:
+      - 80:80
+      - 443:443
+#      - 8080:8080 # Dashboard
+    volumes:
+      - ./data:/etc/traefik:ro
+#      - ./data/traefik.local.pem:/traefik.local.pem:ro
+#      - ./data/traefik.local-key.pem:/traefik.local-key.pem:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.traefik.entrypoints=http
+      - traefik.http.routers.traefik.rule=Host(`traefik.local`)
+      - traefik.http.routers.traefik.middlewares=https-redirect@file
+#      - traefik.http.routers.traefik.service=api@internal
+      - traefik.http.routers.traefik-https.entrypoints=https
+      - traefik.http.routers.traefik-https.rule=Host(`traefik.local`)
+      - traefik.http.routers.traefik-https.service=api@internal
+      - traefik.http.routers.traefik-https.tls=true
+#      - traefik.http.routers.traefik-https.tls.certresolver=http
