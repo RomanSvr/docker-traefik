@@ -1,6 +1,6 @@
 api:
   dashboard: true
-  debug: true
+#  debug: true
 
 entryPoints:
   http:
@@ -26,5 +26,5 @@ providers:
 #        entryPoint: http
 
 log:
-#  level: error
-  level: debug
+  level: error
+#  level: debug

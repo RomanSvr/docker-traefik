@@ -7,17 +7,13 @@ networks:
 services:
   traefik:
     container_name: traefik
-#    build:
-#      context: ./
     image: traefik:2.1
-#    isolation: process
     restart: unless-stopped
     networks:
       - traefik
     ports:
       - 80:80
       - 443:443
-#      - 8080:8080 # Dashboard
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./data:/etc/traefik:ro
