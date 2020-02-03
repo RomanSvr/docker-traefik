@@ -20,6 +20,4 @@
 
 #### the end.
 
-<p align="center">
-<img width="80%" title="Result" alt="Result" src="https://i.imgur.com/qOHISwu.png">
-</p>
+![result](https://i.imgur.com/qOHISwu.png)
