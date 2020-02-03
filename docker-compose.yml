@@ -5,13 +5,13 @@ networks:
     name: traefik
 
 services:
-
   traefik:
     container_name: traefik
-    restart: unless-stopped
+#    build:
+#      context: ./
+    image: traefik:2.1
 #    isolation: process
-    build:
-      context: ./
+    restart: unless-stopped
     networks:
       - traefik
     ports:
@@ -19,18 +19,18 @@ services:
       - 443:443
 #      - 8080:8080 # Dashboard
     volumes:
-      - ./data:/etc/traefik:ro
-#      - ./data/traefik.local.pem:/traefik.local.pem:ro
-#      - ./data/traefik.local-key.pem:/traefik.local-key.pem:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./data:/etc/traefik:ro
+      - ./certs:/etc/certs:ro
     labels:
       - traefik.enable=true
+
       - traefik.http.routers.traefik.entrypoints=http
       - traefik.http.routers.traefik.rule=Host(`traefik.local`)
       - traefik.http.routers.traefik.middlewares=https-redirect@file
-#      - traefik.http.routers.traefik.service=api@internal
-      - traefik.http.routers.traefik-https.entrypoints=https
-      - traefik.http.routers.traefik-https.rule=Host(`traefik.local`)
-      - traefik.http.routers.traefik-https.service=api@internal
-      - traefik.http.routers.traefik-https.tls=true
-#      - traefik.http.routers.traefik-https.tls.certresolver=http
+
+      - traefik.http.routers.traefik-ssl.entrypoints=https
+      - traefik.http.routers.traefik-ssl.rule=Host(`traefik.local`)
+      - traefik.http.routers.traefik-ssl.service=api@internal
+      - traefik.http.routers.traefik-ssl.tls=true
+      - traefik.http.routers.traefik-ssl.middlewares=default-whitelist@file

@@ -17,9 +17,9 @@ http:
     default-whitelist:
       ipWhiteList:
         sourceRange:
-        - "10.0.0.0/24"
-        - "192.168.0.0/16"
         - "172.0.0.0/8"
+#        - "127.0.0.1/32"
+#        - "192.168.0.0/16"
 
     secured:
       chain:
@@ -28,8 +28,11 @@ http:
         - default-headers
 
 tls:
+#  stores:
+#    default:
+#      defaultCertificate:
+#        certFile: /etc/certs/_wildcard.local.pem
+#        keyFile: /etc/certs/_wildcard.local-key.pem
   certificates:
-    - certFile: /etc/traefik/rootCA.pem
-      keyFile: /etc/traefik/rootCA-key.pem
-    - certFile: /etc/traefik/traefik.local.pem
-      keyFile: /etc/traefik/traefik.local-key.pem
+    - certFile: /etc/certs/traefik.local.pem
+      keyFile: /etc/certs/traefik.local-key.pem
